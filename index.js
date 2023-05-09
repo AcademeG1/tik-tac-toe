@@ -6,13 +6,6 @@ area.className = 'area';
 // переделать alert на всплывающее окно
 let player = 'x';
 
-const movePlayer = document.createElement('div');
-movePlayer.className = 'text__move_player';
-const movePlayerSpan = document.createElement('span');
-movePlayer.textContent = 'Current move: ';
-movePlayerSpan.textContent = player;
-movePlayer.append(movePlayerSpan);
-
 const winIndexs = [
     [1, 2, 3],
     [4, 5, 6],
@@ -24,7 +17,61 @@ const winIndexs = [
     [3, 5, 7],
 ];
 
+const stats = {
+    'x': 0,
+    'o': 0,
+    drow: 0,
+}
+
+let statsDiv = `<table>
+                    <th colspan="2">Statistic:</th>
+                    <tr>
+                        <td>X</td>
+                        <td>${stats.x}</td>
+                    </tr>
+                    <tr>
+                        <td>O</td>
+                        <td>${stats.o}</td>
+                    </tr>
+                    <tr>
+                        <td>drow</td>
+                        <td>${stats.drow}</td>
+                    </tr>
+</table>`;
+
+const divStat = document.createElement('div');
+divStat.className = "stat";
+divStat.innerHTML = statsDiv;
+
+const updateStat = () => {
+    statsDiv = `<table>
+                    <th colspan="2">Statistic:</th>
+                    <tr>
+                        <td>X</td>
+                        <td>${stats.x}</td>
+                    </tr>
+                    <tr>
+                        <td>O</td>
+                        <td>${stats.o}</td>
+                    </tr>
+                    <tr>
+                        <td>drow</td>
+                        <td>${stats.drow}</td>
+                    </tr>
+</table>`;
+    divStat.innerHTML = statsDiv;
+}
+
+// render elements
+const movePlayer = document.createElement('div');
+movePlayer.className = 'text__move_player';
+const movePlayerSpan = document.createElement('span');
+movePlayer.textContent = 'Current move: ';
+movePlayerSpan.textContent = player;
+movePlayer.append(movePlayerSpan);
+
 const restartGame = (text) => {
+    updateStat();
     alert(text);
     cells.map(item => item.innerHTML = '');
     player = player == 'x' ? 'o' : 'x'; // смена игрока
@@ -51,14 +98,18 @@ const cellClick = (event) => {
     })
     
     if (checkWin(data)) {
-        restartGame(`Выиграл ${player}`)
+        stats[player] += 1;
+        restartGame(`Выиграл ${player}`);
     } else {
         let fillCell = cells.every(item => {
             if (item.innerHTML == '') {
                 return false;
             } else return true;
         })
-        if (fillCell) restartGame('Ничья!');
+        if (fillCell) {
+            stats.drow += 1;
+            restartGame('Ничья!');
+        };
     }
 
     player = player == 'x' ? 'o' : 'x'; // смена игрока
@@ -78,4 +129,4 @@ for (let i = 1; i <= 9; i++) { // переделать на рекурсивну
     area.append(renderCell(i));
 }
 
-root.append(movePlayer ,area);
+root.append(movePlayer, divStat, area);
