@@ -1,0 +1,62 @@
+html {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    gap: 20px;
+    /* position: relative; */
+}
+
+.text__move_player {
+    font-size: 40px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.area {
+    border: 2px solid black;
+    width: 612px;
+    height: 612px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.cell {
+    border: 2px solid black;
+    width: 200px;
+    height: 200px;
+    float: left;
+    /* display: inline-block; */
+    cursor: pointer;
+    font-size: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnStat {
+    position: relative;
+}
+
+table {
+    font-size: 20px;
+}
+
+.stat {
+    position: absolute;
+    top: 42%;
+    left: 15vw;
+    width: 10vw;
+    background: antiquewhite;
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
